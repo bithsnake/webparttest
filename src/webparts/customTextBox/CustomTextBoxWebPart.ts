@@ -14,18 +14,20 @@ import { ICustomTextBoxProps } from './components/ICustomTextBoxProps';
 
 export interface ICustomTextBoxWebPartProps {
   description: string;
+  bgColor: string;
 }
 
 export default class CustomTextBoxWebPart extends BaseClientSideWebPart<ICustomTextBoxWebPartProps> {
 
   private _isDarkTheme: boolean = false;
   private _environmentMessage: string = '';
-
+  
   public render(): void {
     const element: React.ReactElement<ICustomTextBoxProps> = React.createElement(
       CustomTextBox,
       {
         description: this.properties.description,
+        bgColor: this.properties.bgColor,
         isDarkTheme: this._isDarkTheme,
         environmentMessage: this._environmentMessage,
         hasTeamsContext: !!this.context.sdks.microsoftTeams,
@@ -38,6 +40,7 @@ export default class CustomTextBoxWebPart extends BaseClientSideWebPart<ICustomT
 
   protected onInit(): Promise<void> {
     this._environmentMessage = this._getEnvironmentMessage();
+    this.properties.bgColor = "#FFF";
 
     return super.onInit();
   }
@@ -89,7 +92,10 @@ export default class CustomTextBoxWebPart extends BaseClientSideWebPart<ICustomT
               groupFields: [
                 PropertyPaneTextField('description', {
                   label: strings.DescriptionFieldLabel
-                })
+                }),
+                PropertyPaneTextField('bgColor', {
+                  label: strings.DescriptionFieldLabel
+                }),
               ]
             }
           ]
