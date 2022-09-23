@@ -3,7 +3,7 @@ import styles from "./CustomTextBox.module.scss";
 import { ICustomTextBoxProps } from "./ICustomTextBoxProps";
 // import { escape } from "@microsoft/sp-lodash-subset";
 import { RichText, } from "@pnp/spfx-controls-react/lib/RichText";
-
+import {IPropertyPaneConfiguration,PropertyPaneTextField} from "@microsoft/sp-property-pane"
 // import * as $ from "jquery";
 // StyleOptions, IRichTextProps 
 
