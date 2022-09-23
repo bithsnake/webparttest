@@ -1,0 +1,16 @@
+{
+  "@microsoft/generator-sharepoint": {
+    "plusBeta": false,
+    "isCreatingSolution": true,
+    "version": "1.15.2",
+    "libraryName": "custom-text-box",
+    "libraryId": "da9e6712-f488-4a4a-b095-6d9ae7a75560",
+    "environment": "spo",
+    "packageManager": "npm",
+    "solutionName": "CustomTextBox",
+    "solutionShortDescription": "CustomTextBox description",
+    "skipFeatureDeployment": true,
+    "isDomainIsolated": false,
+    "componentType": "webpart"
+  }
+}

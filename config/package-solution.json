@@ -1,0 +1,40 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/package-solution.schema.json",
+  "solution": {
+    "name": "custom-text-box-client-side-solution",
+    "id": "da9e6712-f488-4a4a-b095-6d9ae7a75560",
+    "version": "1.0.0.0",
+    "includeClientSideAssets": true,
+    "skipFeatureDeployment": true,
+    "isDomainIsolated": false,
+    "developer": {
+      "name": "",
+      "websiteUrl": "",
+      "privacyUrl": "",
+      "termsOfUseUrl": "",
+      "mpnId": "Undefined-1.15.2"
+    },
+    "metadata": {
+      "shortDescription": {
+        "default": "CustomTextBox description"
+      },
+      "longDescription": {
+        "default": "CustomTextBox description"
+      },
+      "screenshotPaths": [],
+      "videoUrl": "",
+      "categories": []
+    },
+    "features": [
+      {
+        "title": "custom-text-box Feature",
+        "description": "The feature that activates elements of the custom-text-box solution.",
+        "id": "c2959d93-93a6-492b-ac7a-6b829cdd2ab6",
+        "version": "1.0.0.0"
+      }
+    ]
+  },
+  "paths": {
+    "zippedPackage": "solution/custom-text-box.sppkg"
+  }
+}

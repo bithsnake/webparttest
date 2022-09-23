@@ -1,0 +1,32 @@
+.cursor-pointer :hover{
+    cursor: pointer !important;
+}
+
+.something{
+    color : "#fff";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100% !important;
+}
+#notify.error{
+    background-color: "#DD2C00";
+}
+
+#input-form{
+    display:block !important;
+}
+
+.hide-form{
+    display: none !important;
+    visibility: hidden !important;
+}
+.show-form{
+    display: block !important;
+}
+
+form{
+    display: none !important;
+    visibility: hidden !important;
+}
