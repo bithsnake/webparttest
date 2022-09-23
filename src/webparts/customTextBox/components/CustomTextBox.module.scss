@@ -1,4 +1,8 @@
 @import '~office-ui-fabric-react/dist/sass/References.scss';
+:root{
+  --backgroundColor : "#FFF";
+}
+
 
 .customTextBox {
   overflow: hidden;
@@ -8,6 +12,10 @@
   &.teams {
     font-family: $ms-font-family-fallbacks;
   }
+}
+
+.customBackgroundColor{
+  background-color: var(--backgroundColor);
 }
 
 .welcome {

@@ -1,130 +1,115 @@
 import * as React from "react";
 import styles from "./CustomTextBox.module.scss";
 import { ICustomTextBoxProps } from "./ICustomTextBoxProps";
-// import { escape } from "@microsoft/sp-lodash-subset";
 import { RichText } from "@pnp/spfx-controls-react/lib/RichText";
 
-// #6A0DAD purple color
 const elementId: string = "_chosencolor";
 export default class CustomTextBox extends React.Component<ICustomTextBoxProps, {}> {
+  public textBoxElementId: string = "_textBoxId";
+  public richTextId : string = "richTextId";
+  public textBoxText: string = "";
+  public backgroundColor: string | void = "";
+  public currentBackgroundColor: string = "white";
 
-
-    public textBoxElementId: string = "_textBoxId";
-    // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-    
-    public richTextId = "richTextId";
-    // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+  public SetColor(): void {
+    this.backgroundColor = this.currentBackgroundColor;
+    document.documentElement.style.setProperty('--backgroundColor', this.backgroundColor);
+    console.log("Current --backgroundColor from SetColor: ", this.backgroundColor);
+    console.log("Changed color from SetColor: ", styles.customBackgroundColor);
+  }
   
-  /*
-                checkOnce = false;
-              const editElement = document.getElementById("edit-background-color");
-              const inputElement = (document.getElementById(elementId) as HTMLInputElement);
-              if (inputElement === undefined || inputElement === null) {
-                console.log("can not find input element");
-                return;
-              }
-              
-              inputElement.value = "#";
-              
-              if (this.PageIsInEditMode()) {
-                if (editElement === undefined || editElement === null) {
-                  console.log("can not find edit element");
-                  return;
-                }
-                document.getElementById("edit-background-color").classList.add("hide-form");
-              }
-              console.log("check once: ", checkOnce);
-  */
-  // componentDidMount(): void {
-  //     const editElement = document.getElementById("edit-background-color");
-  //     const inputElement = (document.getElementById(elementId) as HTMLInputElement);
-  //     if (inputElement === undefined || inputElement === null) {
-  //       console.log("can not find input element");
-  //       return;
-  //     }
-
-  //     inputElement.value = "#";
-              
-  //     if (this.PageIsInEditMode()) {
-  //       if (editElement === undefined || editElement === null) {
-  //         console.log("can not find edit element");
-  //         return;
-  //       }
-  //         document.getElementById("edit-background-color").classList.add("hide-form");
-  //     }
-  //   }
-  
-  private PageIsInEditMode(): boolean {
+  public PageIsInEditMode = (): boolean => {
+    console.log("is in edit mode: ", document.location.href.indexOf('Mode=Edit') !== 1);
     return document.location.href.indexOf('Mode=Edit') !== 1;
   }
-  public render(): React.ReactElement<ICustomTextBoxProps> {
+  
+  public onTextChange = (newText: string): string => {
+    newText = newText.replace(" bold ", " <strong>bold</strong> ");
+    newText = newText.replace(" italic ", " <i>italic</i> ");
+    this.textBoxText = newText;
+    return newText;
+  }
 
-    let currentBackgroundColor: string = "white";
-    let toggleShowExtraOptions: boolean = false;
-    
+  componentDidMount(): void {
+    this.backgroundColor = getComputedStyle(document.documentElement).getPropertyValue('--backgroundColor');
+  }
+
+  componentDidUpdate(prevProps : ICustomTextBoxProps) : void {
+    if (this.props.bgColor !== prevProps.bgColor) {
+      console.log("property changed: ", this.props.bgColor);
+      console.log("prevProps: ", prevProps);
+      document.documentElement.style.setProperty('--backgroundColor', this.props.bgColor as string);
+    }
+  }
+
+  public render(): React.ReactElement<ICustomTextBoxProps> {    
+    // Sharepoint Pane properties
     const {
       hasTeamsContext,
       bgColor,
     } = this.props;
     
-    const ChangeBackgGroundColor = (): void => {
-      this.setState(({bgColor : currentBackgroundColor}));
-      // this.state = {
-        //   bgColor : currentBackgroundColor
-        // }
-        const element = document.getElementById(this.textBoxElementId);
-        element.style.backgroundColor = currentBackgroundColor;
-      };
-      
-      /** Returns the typed in color in the input field*/
-      const ChosenColor = (): void => {
-        const InputElement: HTMLInputElement = document.getElementById(elementId) as HTMLInputElement;
-        currentBackgroundColor = InputElement.value;
-      }
-      
-      function ToggleShowExtraOptions(): void {
-        toggleShowExtraOptions = !toggleShowExtraOptions;
-        document.getElementById("input-form").style.display = toggleShowExtraOptions ? "block" : "none";
-      }
-      
-      const editBoxElement = <div id="edit-background-color">
-      <button className="cursor-pointer" onClick={ToggleShowExtraOptions}>
-        Show extra options
-      </button>
+    // toggle show options
+    let toggleShowExtraOptions: boolean = false;
+
+    document.documentElement.style.setProperty('--backgroundColor', bgColor);
+  
+    const ChangeBackgGroundColorKeyDownHandler = (): void => this.SetColor();
     
-      <div style={{ display: "none" }} className="hide-form" id="input-form">
-        <h2> Change background color</h2>
+    const ChangeBackgroundColorClickHandler = (): void => {
+      this.backgroundColor = this.currentBackgroundColor;
+      document.documentElement.style.setProperty('--backgroundColor', this.backgroundColor);
+    };
+
+    /** Returns the typed in color in the input field*/
+    const ChosenColor = (): void => {
+      const InputElement: HTMLInputElement = document.getElementById(elementId) as HTMLInputElement;
+      this.currentBackgroundColor = InputElement.value;
+      console.log("Changed color from ChosenColor: ", this.currentBackgroundColor);
+    }
+    
+    function ToggleShowExtraOptions(): void {
+      toggleShowExtraOptions = !toggleShowExtraOptions;
+      document.getElementById("input-form").style.display = toggleShowExtraOptions ? "block" : "none";
+    }
+    
+    // Edit color on webpart box
+    const editBoxElement = <div id="edit-background-color">
+    <button className="cursor-pointer" onClick={ToggleShowExtraOptions}>
+      Show extra options
+    </button>
+  
+    <div style={{ display: "none" }} className="hide-form" id="input-form">
+      <h2> Change background color</h2>
         <input
-          defaultValue={"#6A0DAD"}
-          placeholder="#6A0DAD"
-          title="this is not a proper HTML color code"
-          pattern="^#(?:[0-9a-fA-F]{3}){1,2}$"
-          id={elementId}
-          type="changecolor"
+          
+        defaultValue={"#6A0DAD"}
+        placeholder="#6A0DAD"
+        title="this is not a proper HTML color code"
+        pattern="^#(?:[0-9a-fA-F]{3}){1,2}$"
+        id={elementId}
+        type="changecolor"
           onChange={ChosenColor}
-        />
-        <button onClick={ChangeBackgGroundColor}>Set new BG Color</button>
-      </div>
-    </div>;
+          onKeyDown={ChangeBackgGroundColorKeyDownHandler}
+      />
+      <button onClick={ChangeBackgroundColorClickHandler}>Set new BG Color</button>
+    </div>
+  </div>;
+  
     return (
       <>
-        {
-          this.PageIsInEditMode()
-            ? editBoxElement
-            : <></>
-        }
+        {this.PageIsInEditMode() ? editBoxElement : <></>}
         <section>
-
           <div className={`${styles.customTextBox} ${hasTeamsContext ? styles.teams : ""}`}>
-              <div id={this.textBoxElementId} className={styles.welcome} style={{ backgroundColor: bgColor, color: "black" }}>
-                <RichText value={this.props.value} isEditMode={true} />
-              </div>
+              <RichText
+                className={styles.customBackgroundColor}
+                onChange={(text: string) => this.onTextChange(text)}
+                value={this.textBoxText}
+                isEditMode={true}/>
           </div>
-        
-      </section>
-        </>
-      );
-    
-    
+        </section>
+      </>
+    );
+  
   }
 }
