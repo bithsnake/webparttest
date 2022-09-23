@@ -6,8 +6,6 @@ import { RichText } from "@pnp/spfx-controls-react/lib/RichText";
 
 // #6A0DAD purple color
 const elementId: string = "_chosencolor";
-let checkOnce: boolean = true;
-
 export default class CustomTextBox extends React.Component<ICustomTextBoxProps, {}> {
 
 
@@ -17,6 +15,26 @@ export default class CustomTextBox extends React.Component<ICustomTextBoxProps, 
     public richTextId = "richTextId";
     // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   
+  /*
+                checkOnce = false;
+              const editElement = document.getElementById("edit-background-color");
+              const inputElement = (document.getElementById(elementId) as HTMLInputElement);
+              if (inputElement === undefined || inputElement === null) {
+                console.log("can not find input element");
+                return;
+              }
+              
+              inputElement.value = "#";
+              
+              if (this.PageIsInEditMode()) {
+                if (editElement === undefined || editElement === null) {
+                  console.log("can not find edit element");
+                  return;
+                }
+                document.getElementById("edit-background-color").classList.add("hide-form");
+              }
+              console.log("check once: ", checkOnce);
+  */
   // componentDidMount(): void {
   //     const editElement = document.getElementById("edit-background-color");
   //     const inputElement = (document.getElementById(elementId) as HTMLInputElement);
@@ -91,28 +109,9 @@ export default class CustomTextBox extends React.Component<ICustomTextBoxProps, 
     return (
       <>
         {
-              checkOnce ?
-            () => {
-              checkOnce = false;
-              const editElement = document.getElementById("edit-background-color");
-              const inputElement = (document.getElementById(elementId) as HTMLInputElement);
-              if (inputElement === undefined || inputElement === null) {
-                console.log("can not find input element");
-                return;
-              }
-              
-              inputElement.value = "#";
-              
-              if (this.PageIsInEditMode()) {
-                if (editElement === undefined || editElement === null) {
-                  console.log("can not find edit element");
-                  return;
-                }
-                document.getElementById("edit-background-color").classList.add("hide-form");
-              }
-              console.log("check once: ", checkOnce);
-            }
-            : editBoxElement
+          this.PageIsInEditMode()
+            ? editBoxElement
+            : <></>
         }
         <section>
 
