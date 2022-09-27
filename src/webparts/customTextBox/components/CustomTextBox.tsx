@@ -5,6 +5,7 @@ import { RichText } from "@pnp/spfx-controls-react/lib/RichText";
 
 const elementId: string = "_chosencolor";
 export default class CustomTextBox extends React.Component<ICustomTextBoxProps, {}> {
+
   public textBoxElementId: string = "_textBoxId";
   public richTextId : string = "richTextId";
   public textBoxText: string = "";
@@ -14,8 +15,6 @@ export default class CustomTextBox extends React.Component<ICustomTextBoxProps, 
   public SetColor(): void {
     this.backgroundColor = this.currentBackgroundColor;
     document.documentElement.style.setProperty('--backgroundColor', this.backgroundColor);
-    console.log("Current --backgroundColor from SetColor: ", this.backgroundColor);
-    console.log("Changed color from SetColor: ", styles.customBackgroundColor);
   }
   
   public PageIsInEditMode = (): boolean => {
@@ -32,6 +31,7 @@ export default class CustomTextBox extends React.Component<ICustomTextBoxProps, 
 
   componentDidMount(): void {
     this.backgroundColor = getComputedStyle(document.documentElement).getPropertyValue('--backgroundColor');
+  
   }
 
   componentDidUpdate(prevProps : ICustomTextBoxProps) : void {
@@ -41,17 +41,18 @@ export default class CustomTextBox extends React.Component<ICustomTextBoxProps, 
       document.documentElement.style.setProperty('--backgroundColor', this.props.bgColor as string);
     }
   }
-
+  
   public render(): React.ReactElement<ICustomTextBoxProps> {    
     // Sharepoint Pane properties
     const {
       hasTeamsContext,
       bgColor,
     } = this.props;
-    
+
     // toggle show options
     let toggleShowExtraOptions: boolean = false;
-
+    this.backgroundColor = bgColor;
+    
     document.documentElement.style.setProperty('--backgroundColor', bgColor);
   
     const ChangeBackgGroundColorKeyDownHandler = (): void => this.SetColor();
@@ -98,7 +99,7 @@ export default class CustomTextBox extends React.Component<ICustomTextBoxProps, 
   
     return (
       <>
-        {this.PageIsInEditMode() ? editBoxElement : <></>}
+        {/* {this.PageIsInEditMode() ? editBoxElement : <></>} */}
         <section>
           <div className={`${styles.customTextBox} ${hasTeamsContext ? styles.teams : ""}`}>
               <RichText
