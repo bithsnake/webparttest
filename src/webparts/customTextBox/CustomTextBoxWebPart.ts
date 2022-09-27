@@ -11,10 +11,18 @@ import { IReadonlyTheme } from '@microsoft/sp-component-base';
 import * as strings from 'CustomTextBoxWebPartStrings';
 import CustomTextBox from './components/CustomTextBox';
 import { ICustomTextBoxProps } from './components/ICustomTextBoxProps';
+import { PropertyFieldColorPicker, PropertyFieldColorPickerStyle } from '@pnp/spfx-property-controls/lib/PropertyFieldColorPicker';
+
+
+export interface IPropertyControlsTestWebPartProps {
+  color: string;
+}
 
 export interface ICustomTextBoxWebPartProps {
   description: string;
+  htmlContent : string;
   bgColor: string;
+  color: string;
 }
 
 export default class CustomTextBoxWebPart extends BaseClientSideWebPart<ICustomTextBoxWebPartProps> {
@@ -31,7 +39,15 @@ export default class CustomTextBoxWebPart extends BaseClientSideWebPart<ICustomT
         isDarkTheme: this._isDarkTheme,
         environmentMessage: this._environmentMessage,
         hasTeamsContext: !!this.context.sdks.microsoftTeams,
-        userDisplayName: this.context.pageContext.user.displayName
+        userDisplayName: this.context.pageContext.user.displayName,
+        htmlContent : this.properties.htmlContent,
+        changeHtmlContent :  (text : string)=> {
+          console.log("current text, : ", text);
+          this.properties.htmlContent = text;
+
+          console.log("current htmlContent: " , this.properties.htmlContent);
+
+        },
       }
     );
 
@@ -40,7 +56,7 @@ export default class CustomTextBoxWebPart extends BaseClientSideWebPart<ICustomT
 
   protected onInit(): Promise<void> {
     this._environmentMessage = this._getEnvironmentMessage();
-    this.properties.bgColor = "#FFF";
+    // this.properties.bgColor = "#800080";
 
     return super.onInit();
   }
@@ -94,8 +110,24 @@ export default class CustomTextBoxWebPart extends BaseClientSideWebPart<ICustomT
                   label: strings.DescriptionFieldLabel
                 }),
                 PropertyPaneTextField('bgColor', {
-                  label: strings.DescriptionFieldLabel
+                  label:"Background Color"
                 }),
+                PropertyFieldColorPicker('color', {
+                  label: 'Color',
+                  selectedColor: this.properties.color,
+                  onPropertyChange: this.onPropertyPaneFieldChanged,
+                  properties: this.properties,
+                  disabled: false,
+                  debounce: 1000,
+                  isHidden: false,
+                  alphaSliderHidden: false,
+                  style: PropertyFieldColorPickerStyle.Full,
+                  iconName: 'Precipitation',
+                  key: 'colorFieldId'
+                })
+                // PropertyPaneTextField('htmlContent', {
+                //   label: "html content"
+                // }),
               ]
             }
           ]
