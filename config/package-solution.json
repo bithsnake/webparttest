@@ -3,16 +3,16 @@
   "solution": {
     "name": "custom-text-box-client-side-solution",
     "id": "da9e6712-f488-4a4a-b095-6d9ae7a75560",
-    "version": "1.0.0.0",
+    "version": "1.0.0.1",
     "includeClientSideAssets": true,
     "skipFeatureDeployment": true,
     "isDomainIsolated": false,
     "developer": {
-      "name": "",
-      "websiteUrl": "",
-      "privacyUrl": "",
-      "termsOfUseUrl": "",
-      "mpnId": "Undefined-1.15.2"
+      "name": "Sogeti Sweden AB",
+      "mpnId": "567082",
+      "privacyUrl": "https://www.sogeti.se/",
+      "termsOfUseUrl": "https://www.sogeti.se/",
+      "websiteUrl": "https://www.sogeti.se/"
     },
     "metadata": {
       "shortDescription": {

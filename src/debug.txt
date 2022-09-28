@@ -1,0 +1,42 @@
+
+    // const ChangeBackgGroundColorKeyDownHandler = (): void => this.SetColor();
+    
+    // const ChangeBackgroundColorClickHandler = (): void => {
+    //   this.backgroundColor = this.currentBackgroundColor;
+    //   document.documentElement.style.setProperty('--backgroundColor', this.backgroundColor);
+    // };
+
+    // /** Returns the typed in color in the input field*/
+    // const ChosenColor = (): void => {
+    //   const InputElement: HTMLInputElement = document.getElementById(elementId) as HTMLInputElement;
+    //   this.currentBackgroundColor = InputElement.value;
+    //   console.log("Changed color from ChosenColor: ", this.currentBackgroundColor);
+    // }
+    
+    // function ToggleShowExtraOptions(): void {
+    //   toggleShowExtraOptions = !toggleShowExtraOptions;
+    //   document.getElementById("input-form").style.display = toggleShowExtraOptions ? "block" : "none";
+    // }
+    
+    // Edit color on webpart box
+  //   const editBoxElement = <div id="edit-background-color">
+  //   <button className="cursor-pointer" onClick={ToggleShowExtraOptions}>
+  //     Show extra options
+  //   </button>
+  
+  //   <div style={{ display: "none" }} className="hide-form" id="input-form">
+  //     <h2> Change background color</h2>
+  //       <input
+          
+  //       defaultValue={"#6A0DAD"}
+  //       placeholder="#6A0DAD"
+  //       title="this is not a proper HTML color code"
+  //       pattern="^#(?:[0-9a-fA-F]{3}){1,2}$"
+  //       id={elementId}
+  //       type="changecolor"
+  //         onChange={ChosenColor}
+  //         onKeyDown={ChangeBackgGroundColorKeyDownHandler}
+  //     />
+  //     <button onClick={ChangeBackgroundColorClickHandler}>Set new BG Color</button>
+  //   </div>
+  // </div>;

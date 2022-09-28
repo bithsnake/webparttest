@@ -12,7 +12,7 @@ import * as strings from 'CustomTextBoxWebPartStrings';
 import CustomTextBox from './components/CustomTextBox';
 import { ICustomTextBoxProps } from './components/ICustomTextBoxProps';
 import { PropertyFieldColorPicker, PropertyFieldColorPickerStyle } from '@pnp/spfx-property-controls/lib/PropertyFieldColorPicker';
-
+import { DisplayMode} from '@microsoft/sp-core-library';
 
 export interface IPropertyControlsTestWebPartProps {
   color: string;
@@ -21,6 +21,7 @@ export interface IPropertyControlsTestWebPartProps {
 export interface ICustomTextBoxWebPartProps {
   description: string;
   htmlContent : string;
+  isInEditMode : boolean;
   bgColor: string;
   color: string;
 }
@@ -41,10 +42,10 @@ export default class CustomTextBoxWebPart extends BaseClientSideWebPart<ICustomT
         hasTeamsContext: !!this.context.sdks.microsoftTeams,
         userDisplayName: this.context.pageContext.user.displayName,
         htmlContent : this.properties.htmlContent,
+        isInEditMode : DisplayMode.Edit ? true : false,
         changeHtmlContent :  (text : string)=> {
           console.log("current text, : ", text);
           this.properties.htmlContent = text;
-
           console.log("current htmlContent: " , this.properties.htmlContent);
 
         },
@@ -57,7 +58,6 @@ export default class CustomTextBoxWebPart extends BaseClientSideWebPart<ICustomT
   protected onInit(): Promise<void> {
     this._environmentMessage = this._getEnvironmentMessage();
     // this.properties.bgColor = "#800080";
-
     return super.onInit();
   }
 
@@ -65,7 +65,6 @@ export default class CustomTextBoxWebPart extends BaseClientSideWebPart<ICustomT
     if (!!this.context.sdks.microsoftTeams) { // running in Teams
       return this.context.isServedFromLocalhost ? strings.AppLocalEnvironmentTeams : strings.AppTeamsTabEnvironment;
     }
-
     return this.context.isServedFromLocalhost ? strings.AppLocalEnvironmentSharePoint : strings.AppSharePointEnvironment;
   }
 

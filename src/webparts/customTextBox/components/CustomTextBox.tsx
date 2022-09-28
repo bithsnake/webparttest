@@ -3,15 +3,10 @@ import styles from "./CustomTextBox.module.scss";
 import { ICustomTextBoxProps } from "./ICustomTextBoxProps";
 import { RichText } from "@pnp/spfx-controls-react/lib/RichText";
 
-// const elementId: string = "_chosencolor";
 export default class CustomTextBox extends React.Component<ICustomTextBoxProps, {}> {
-
-  public textBoxElementId: string = "_textBoxId";
-  public richTextId : string = "richTextId";
-  public textBoxText: string = "";
-  public backgroundColor: string | void = "";
-  public htmlContent : string;
-  public currentBackgroundColor: string = "white";
+  private textBoxText: string = "";
+  private backgroundColor: string | void = "";
+  private currentBackgroundColor: string = "white";
 
   public SetColor(): void {
     this.backgroundColor = this.currentBackgroundColor;
@@ -19,20 +14,22 @@ export default class CustomTextBox extends React.Component<ICustomTextBoxProps, 
   }
   
   public PageIsInEditMode = (): boolean => {
-    console.log("is in edit mode: ", document.location.href.indexOf('Mode=Edit') !== 1);
-    return document.location.href.indexOf('Mode=Edit') !== 1;
+    const isInEditMode = document.location.href.indexOf('Mode=Edit');
+    console.log("is in edit mode: ", isInEditMode !== 1);
+    return isInEditMode === 1;
   }
 
-  componentDidMount(): void {
+  override componentDidMount(): void {
     this.backgroundColor = getComputedStyle(document.documentElement).getPropertyValue('--backgroundColor');
+    console.log("isInEditMode: , " , this.props.isInEditMode);
   }
 
-  componentDidUpdate(prevProps : ICustomTextBoxProps) : void {
+  override componentDidUpdate(prevProps : ICustomTextBoxProps) : void {
     if (this.props.bgColor !== prevProps.bgColor) {
       document.documentElement.style.setProperty('--backgroundColor', this.props.bgColor as string);
     }
   }
-  
+
   public render(): React.ReactElement<ICustomTextBoxProps> {    
     // Sharepoint Pane properties
     const {
@@ -40,6 +37,7 @@ export default class CustomTextBox extends React.Component<ICustomTextBoxProps, 
       bgColor,
       htmlContent,
       changeHtmlContent,
+      isInEditMode,
     } = this.props;
 
     // toggle show options
@@ -58,58 +56,17 @@ export default class CustomTextBox extends React.Component<ICustomTextBoxProps, 
       return newText;
     }
 
-    // const ChangeBackgGroundColorKeyDownHandler = (): void => this.SetColor();
-    
-    // const ChangeBackgroundColorClickHandler = (): void => {
-    //   this.backgroundColor = this.currentBackgroundColor;
-    //   document.documentElement.style.setProperty('--backgroundColor', this.backgroundColor);
-    // };
-
-    // /** Returns the typed in color in the input field*/
-    // const ChosenColor = (): void => {
-    //   const InputElement: HTMLInputElement = document.getElementById(elementId) as HTMLInputElement;
-    //   this.currentBackgroundColor = InputElement.value;
-    //   console.log("Changed color from ChosenColor: ", this.currentBackgroundColor);
-    // }
-    
-    // function ToggleShowExtraOptions(): void {
-    //   toggleShowExtraOptions = !toggleShowExtraOptions;
-    //   document.getElementById("input-form").style.display = toggleShowExtraOptions ? "block" : "none";
-    // }
-    
-    // Edit color on webpart box
-  //   const editBoxElement = <div id="edit-background-color">
-  //   <button className="cursor-pointer" onClick={ToggleShowExtraOptions}>
-  //     Show extra options
-  //   </button>
-  
-  //   <div style={{ display: "none" }} className="hide-form" id="input-form">
-  //     <h2> Change background color</h2>
-  //       <input
-          
-  //       defaultValue={"#6A0DAD"}
-  //       placeholder="#6A0DAD"
-  //       title="this is not a proper HTML color code"
-  //       pattern="^#(?:[0-9a-fA-F]{3}){1,2}$"
-  //       id={elementId}
-  //       type="changecolor"
-  //         onChange={ChosenColor}
-  //         onKeyDown={ChangeBackgGroundColorKeyDownHandler}
-  //     />
-  //     <button onClick={ChangeBackgroundColorClickHandler}>Set new BG Color</button>
-  //   </div>
-  // </div>;
-  
     return (
       <>
         {/* {this.PageIsInEditMode() ? editBoxElement : <></>} */}
         <section>
           <div className={`${styles.customTextBox} ${hasTeamsContext ? styles.teams : ""}`}>
+
               <RichText
                 className={styles.customBackgroundColor}
                 onChange={(text: string) => onTextChange(text)}
                 value={htmlContent}
-                isEditMode={true}/>
+                isEditMode={isInEditMode}/>
           </div>
         </section>
       </>
