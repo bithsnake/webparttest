@@ -11,7 +11,7 @@ import { IReadonlyTheme } from '@microsoft/sp-component-base';
 import * as strings from 'CustomTextBoxWebPartStrings';
 import CustomTextBox from './components/CustomTextBox';
 import { ICustomTextBoxProps } from './components/ICustomTextBoxProps';
-import { PropertyFieldColorPicker, PropertyFieldColorPickerStyle } from '@pnp/spfx-property-controls/lib/PropertyFieldColorPicker';
+// import { PropertyFieldColorPicker, PropertyFieldColorPickerStyle } from '@pnp/spfx-property-controls/lib/PropertyFieldColorPicker';
 import { DisplayMode} from '@microsoft/sp-core-library';
 
 export interface IPropertyControlsTestWebPartProps {
@@ -42,22 +42,25 @@ export default class CustomTextBoxWebPart extends BaseClientSideWebPart<ICustomT
         hasTeamsContext: !!this.context.sdks.microsoftTeams,
         userDisplayName: this.context.pageContext.user.displayName,
         htmlContent : this.properties.htmlContent,
-        isInEditMode : DisplayMode.Edit ? true : false,
+        isInEditMode: this.properties.isInEditMode,
         changeHtmlContent :  (text : string)=> {
           console.log("current text, : ", text);
           this.properties.htmlContent = text;
           console.log("current htmlContent: " , this.properties.htmlContent);
-
         },
       }
     );
 
     ReactDom.render(element, this.domElement);
   }
+  /*Checks if webpart is in edit mode */
+  public CheckIfInEditMode(): void {
+    this.properties.isInEditMode = this.displayMode === DisplayMode.Edit;
+  }
 
   protected onInit(): Promise<void> {
     this._environmentMessage = this._getEnvironmentMessage();
-    // this.properties.bgColor = "#800080";
+    this.CheckIfInEditMode();
     return super.onInit();
   }
 
@@ -105,25 +108,25 @@ export default class CustomTextBoxWebPart extends BaseClientSideWebPart<ICustomT
             {
               groupName: strings.BasicGroupName,
               groupFields: [
-                PropertyPaneTextField('description', {
-                  label: strings.DescriptionFieldLabel
-                }),
+                // PropertyPaneTextField('description', {
+                //   label: strings.DescriptionFieldLabel
+                // }),
                 PropertyPaneTextField('bgColor', {
                   label:"Background Color"
                 }),
-                PropertyFieldColorPicker('color', {
-                  label: 'Color',
-                  selectedColor: this.properties.color,
-                  onPropertyChange: this.onPropertyPaneFieldChanged,
-                  properties: this.properties,
-                  disabled: false,
-                  debounce: 1000,
-                  isHidden: false,
-                  alphaSliderHidden: false,
-                  style: PropertyFieldColorPickerStyle.Full,
-                  iconName: 'Precipitation',
-                  key: 'colorFieldId'
-                })
+                // PropertyFieldColorPicker('color', {
+                //   label: 'Color',
+                //   selectedColor: this.properties.color,
+                //   onPropertyChange: this.onPropertyPaneFieldChanged,
+                //   properties: this.properties,
+                //   disabled: false,
+                //   debounce: 1000,
+                //   isHidden: false,
+                //   alphaSliderHidden: false,
+                //   style: PropertyFieldColorPickerStyle.Full,
+                //   iconName: 'Precipitation',
+                //   key: 'colorFieldId'
+                // })
                 // PropertyPaneTextField('htmlContent', {
                 //   label: "html content"
                 // }),

@@ -3,7 +3,7 @@
   "solution": {
     "name": "custom-text-box-client-side-solution",
     "id": "da9e6712-f488-4a4a-b095-6d9ae7a75560",
-    "version": "1.0.0.1",
+    "version": "1.0.0.4",
     "includeClientSideAssets": true,
     "skipFeatureDeployment": true,
     "isDomainIsolated": false,
@@ -16,10 +16,10 @@
     },
     "metadata": {
       "shortDescription": {
-        "default": "CustomTextBox description"
+        "default": "Rich Text Box"
       },
       "longDescription": {
-        "default": "CustomTextBox description"
+        "default": "Rich Text Box"
       },
       "screenshotPaths": [],
       "videoUrl": "",

@@ -15,13 +15,11 @@ export default class CustomTextBox extends React.Component<ICustomTextBoxProps, 
   
   public PageIsInEditMode = (): boolean => {
     const isInEditMode = document.location.href.indexOf('Mode=Edit');
-    console.log("is in edit mode: ", isInEditMode !== 1);
-    return isInEditMode === 1;
+    return isInEditMode === 1 ? true : false;
   }
 
   override componentDidMount(): void {
     this.backgroundColor = getComputedStyle(document.documentElement).getPropertyValue('--backgroundColor');
-    console.log("isInEditMode: , " , this.props.isInEditMode);
   }
 
   override componentDidUpdate(prevProps : ICustomTextBoxProps) : void {
@@ -40,8 +38,6 @@ export default class CustomTextBox extends React.Component<ICustomTextBoxProps, 
       isInEditMode,
     } = this.props;
 
-    // toggle show options
-    // let toggleShowExtraOptions: boolean = false;
     this.backgroundColor = bgColor;
   
     // changes the the variable that holds the value for the background color
@@ -58,7 +54,6 @@ export default class CustomTextBox extends React.Component<ICustomTextBoxProps, 
 
     return (
       <>
-        {/* {this.PageIsInEditMode() ? editBoxElement : <></>} */}
         <section>
           <div className={`${styles.customTextBox} ${hasTeamsContext ? styles.teams : ""}`}>
 

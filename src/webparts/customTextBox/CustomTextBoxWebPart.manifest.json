@@ -18,8 +18,8 @@
   "preconfiguredEntries": [{
     "groupId": "5c03119e-3074-46fd-976b-c60198311f70", // Advanced
     "group": { "default": "Advanced" },
-    "title": { "default": "CustomTextBoxNEW" },
-    "description": { "default": "CustomTextBox description" },
+    "title": { "default": "Rich Text Box" },
+    "description": { "default": "Rich Text Box" },
     "officeFabricIconFontName": "Page",
     "properties": {
       "description": "CustomTextBox",
