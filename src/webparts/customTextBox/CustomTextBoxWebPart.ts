@@ -44,9 +44,7 @@ export default class CustomTextBoxWebPart extends BaseClientSideWebPart<ICustomT
         htmlContent : this.properties.htmlContent,
         isInEditMode: this.properties.isInEditMode,
         changeHtmlContent :  (text : string)=> {
-          console.log("current text, : ", text);
           this.properties.htmlContent = text;
-          console.log("current htmlContent: " , this.properties.htmlContent);
         },
       }
     );
